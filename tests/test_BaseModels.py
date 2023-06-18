@@ -7,11 +7,9 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
 
     def test_instance_attributes(self):
-        base_model = BaseModel()
-
-        self.assertIsInstance(base_model.id, str)
-        self.assertIsInstance(base_model.created_at, datetime)
-        self.assertIsInstance(base_model.updated_at, datetime)
+        self.assertIsInstance(BaseModel().id, str)
+        self.assertIsInstance(BaseModel().created_at, datetime)
+        self.assertIsInstance(BaseModel().updated_at, datetime)
 
     def test_str_method(self):
         base_model = BaseModel()
