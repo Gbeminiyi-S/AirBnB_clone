@@ -33,7 +33,7 @@ class TestBaseModel(unittest.TestCase):
         base_model = BaseModel()
         base_model_dict = base_model.to_dict()
         new_created_at = base_model.created_at.isoformat()
-        new_uodated_at = base_model.updated_at.isoformat()
+        new_updated_at = base_model.updated_at.isoformat()
 
         self.assertIsInstance(base_model_dict, dict)
         self.assertEqual(base_model_dict['__class__'], 'BaseModel')
