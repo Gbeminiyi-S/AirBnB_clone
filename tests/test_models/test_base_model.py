@@ -7,9 +7,20 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
 
     def test_instance_attributes(self):
-        self.assertIsInstance(BaseModel().id, str)
-        self.assertIsInstance(BaseModel().created_at, datetime)
-        self.assertIsInstance(BaseModel().updated_at, datetime)
+        base_model = BaseModel()
+        self.assertIsInstance(base_model.id, str)
+        self.assertIsInstance(base_model.created_at, datetime)
+        self.assertIsInstance(base_model.updated_at, datetime)
+
+        # To test reinitialisation of instance of the dictionary
+        base_model_dict = base_model.to_dict()
+        new_base_model = BaseModel(**base_model_dict)
+        self.assertNotEqual(base_model, new_base_model)
+        self.assertEqual(base_model.id, new_base_model.id)
+        self.assertEqual(base_model.created_at, new_base_model.created_at)
+        self.assertEqual(base_model.updated_at, new_base_model.updated_at)
+        self.assertNotIn('__class__', new_base_model.__dict__)
+
 
     def test_str_method(self):
         base_model = BaseModel()
