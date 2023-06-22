@@ -11,12 +11,12 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self):
         """Exits the program
         """
-        return True
+        exit()
 
     def do_EOF(self):
         """Exits the program
         """
-        return True
+        exit()
 
     def emptyline(self):
         """Defines what happens when the `Enter` key is pressed
