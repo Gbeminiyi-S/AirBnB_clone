@@ -21,7 +21,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(base_model.updated_at, new_base_model.updated_at)
         self.assertNotIn('__class__', new_base_model.__dict__)
 
-
     def test_str_method(self):
         base_model = BaseModel()
         class_name = base_model.__class__.__name__
