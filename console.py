@@ -121,6 +121,13 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, args[2], eval(args[3]))
                 obj.save()
 
+    def default(self, arg):
+        "Defines any other command"
+        args = arg.split('.')
+        if args[0] in classes:
+            if args[1] == "all()":
+                self.do_all(args[0])
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
