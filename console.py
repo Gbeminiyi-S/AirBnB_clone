@@ -140,8 +140,11 @@ class HBNBCommand(cmd.Cmd):
                 uuid = eval(args[1].strip("destroy()"))
                 self.do_destroy(f"{args[0]} {uuid}")
             elif args[1].startswith("update"):
-                entry = eval(args[1].strip("update()"))
-                self.do_update(f"{args[0]} {entry[0]} {entry[1]} {entry[2]}")
+                entry = args[1].strip("update()").split(", ")
+                uuid = eval(entry[0])
+                name = eval(entry[1])
+                value = entry[2]
+                self.do_update(f"{args[0]} {uuid} {key} {value}")
 
 
 if __name__ == '__main__':
