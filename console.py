@@ -144,7 +144,7 @@ class HBNBCommand(cmd.Cmd):
                 uuid = eval(entry[0])
                 name = eval(entry[1])
                 value = entry[2]
-                self.do_update(f"{args[0]} {uuid} {key} {value}")
+                self.do_update(f"{args[0]} {uuid} {name} {value}")
 
 
 if __name__ == '__main__':
