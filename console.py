@@ -136,6 +136,9 @@ class HBNBCommand(cmd.Cmd):
             elif args[1].startswith("show"):
                 uuid = eval(args[1].strip("show()"))
                 self.do_show(f"{args[0]} {uuid}")
+            elif args[1].startswith("destroy"):
+                uuid = eval(args[1].strip("destroy()"))
+                self.do_destroy(f"{args[0]} {uuid}")
 
 
 if __name__ == '__main__':
