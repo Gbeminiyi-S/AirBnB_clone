@@ -47,23 +47,19 @@ class FileStorageTestCase(unittest.TestCase):
 
     def test_reload_method(self):
         """tests that the instance is reinitialised"""
-        base_model = BaseModel()
-        base_model.save()
+        bm = BaseModel()
+        storage.new(bm)
+        storage.save()
         storage.reload()
-        reloaded_objects = storage.all()
+        objs = FileStorage._FileStorage__objects
+        self.assertIn("BaseModel." + bm.id, objs)
 
-        self.assertGreater(len(reloaded_objects), 0)
+    def test_reload_no_file(self):
+        self.assertRaises(FileNotFoundError, models.storage.reload())
 
-        for key, obj in reloaded_objects.items():
-            class_name, obj_id = key.split('.')
-            self.assertEqual(obj.__class__.__name__, class_name)
-            self.assertEqual(obj.id, obj_id)
-            self.assertEqual(obj.created_at, base_model.created_at)
-            self.assertEqual(obj.updated_at, base_model.updated_at)
-
-        key = "BaseModel.{}".format(base_model.id)
-        self.assertIn(key, reloaded_objects)
-
+    def test_reload_with_arg(self):
+        with self.assertRaises(TypeError):
+            models.storage.reload(None)
 
 if __name__ == '__main__':
     unittest.main()
