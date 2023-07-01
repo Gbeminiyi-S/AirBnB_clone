@@ -10,8 +10,8 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         if not kwargs:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
             storage.new(self)
         else:
             for key, value in kwargs.items():
@@ -30,7 +30,7 @@ class BaseModel:
 
     def save(self):
         """updates the `updated_at` attribute with current datetime"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
         storage.save()
 
     def to_dict(self):

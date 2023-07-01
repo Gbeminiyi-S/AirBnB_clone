@@ -54,8 +54,10 @@ class FileStorageTestCase(unittest.TestCase):
         objs = FileStorage._FileStorage__objects
         self.assertIn("BaseModel." + bm.id, objs)
 
-    def test_reload_no_file(self):
-        self.assertRaises(FileNotFoundError, storage.reload())
+    def test_reload_with_arg(self):
+        with self.assertRaises(TypeError):
+            storage.reload(None)
+
 
 if __name__ == '__main__':
     unittest.main()
