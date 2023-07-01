@@ -41,4 +41,4 @@ class FileStorage():
                 for value in new_obj.values():
                     self.new(eval(value["__class__"])(**value))
         except FileNotFoundError:
-            return
+            pass

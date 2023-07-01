@@ -45,12 +45,8 @@ class FileStorageTestCase(unittest.TestCase):
         base_model.save()
         self.assertTrue(os.path.exists('file.json'))
 
-    def test_reload_method(self):
+    def test_reload_no_file(self):
         """tests that the instance is reinitialised"""
-        storage.reload()
-        with self.assertRaises(FileNotFoundError):
-            pass
-
         bm = BaseModel()
         storage.new(bm)
         storage.save()
