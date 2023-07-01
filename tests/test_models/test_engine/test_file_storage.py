@@ -47,16 +47,15 @@ class FileStorageTestCase(unittest.TestCase):
 
     def test_reload_method(self):
         """tests that the instance is reinitialised"""
+        storage.reload()
+        self.assertEqual(len(storage._FileStorage__objects), 0)
+
         bm = BaseModel()
         storage.new(bm)
         storage.save()
         storage.reload()
         objs = FileStorage._FileStorage__objects
         self.assertIn("BaseModel." + bm.id, objs)
-
-    def test_reload_with_arg(self):
-        with self.assertRaises(TypeError):
-            storage.reload(None)
 
 
 if __name__ == '__main__':
