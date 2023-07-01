@@ -5,6 +5,7 @@ from models import storage
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
+
 class FileStorageTestCase(unittest.TestCase):
     def setUp(self):
         """clearing the content of the __objects first"""
@@ -31,7 +32,6 @@ class FileStorageTestCase(unittest.TestCase):
         all_objects = storage.all()
         self.assertEqual(len(all_objects), 1)
         self.assertIn("BaseModel.{}".format(base_model.id), all_objects)
-
 
     def test_new_method(self):
         """checks that the new instance is added to the __objects"""
@@ -63,7 +63,7 @@ class FileStorageTestCase(unittest.TestCase):
 
         key = "BaseModel.{}".format(base_model.id)
         self.assertIn(key, reloaded_objects)
-        
+
 
 if __name__ == '__main__':
     unittest.main()

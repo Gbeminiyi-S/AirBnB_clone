@@ -2,6 +2,7 @@
 import unittest
 from datetime import datetime
 from models.base_model import BaseModel
+import os
 
 
 class TestBaseModel(unittest.TestCase):
@@ -29,13 +30,6 @@ class TestBaseModel(unittest.TestCase):
 
         self.assertEqual(str(base_model), expected_output)
 
-    def test_save_method(self):
-        base_model = BaseModel()
-        original_updated_at = base_model.updated_at
-        base_model.save()
-
-        self.assertNotEqual(original_updated_at, base_model.updated_at)
-
     def test_to_dict_method(self):
         base_model = BaseModel()
         base_model_dict = base_model.to_dict()
@@ -47,6 +41,46 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(base_model_dict['id'], base_model.id)
         self.assertEqual(base_model_dict['created_at'], new_created_at)
         self.assertEqual(base_model_dict['updated_at'], new_updated_at)
+
+
+class TestBaseModel_save(unittest.TestCase):
+    """Unittests for testing save method of the BaseModel class."""
+
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+
+    def test_one_save(self):
+        bm = BaseModel()
+        first_updated_at = bm.updated_at
+        bm.save()
+        self.assertLess(first_updated_at, bm.updated_at)
+
+    def test_save_with_arg(self):
+        bm = BaseModel()
+        with self.assertRaises(TypeError):
+            bm.save(None)
+
+    def test_save_updates_file(self):
+        bm = BaseModel()
+        bm.save()
+        bmid = "BaseModel." + bm.id
+        with open("file.json", "r") as f:
+            self.assertIn(bmid, f.read())
 
 
 if __name__ == '__main__':
