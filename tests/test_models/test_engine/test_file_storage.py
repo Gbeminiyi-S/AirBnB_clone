@@ -47,8 +47,12 @@ class FileStorageTestCase(unittest.TestCase):
 
     def test_reload_method(self):
         """tests that the instance is reinitialised"""
+        base_model = BaseModel()
+        base_model.save()
         storage.reload()
         reloaded_objects = storage.all()
+
+        self.assertGreater(len(reloaded_objects), 0)
 
         for key, obj in reloaded_objects.items():
             class_name, obj_id = key.split('.')
@@ -56,6 +60,9 @@ class FileStorageTestCase(unittest.TestCase):
             self.assertEqual(obj.id, obj_id)
             self.assertEqual(obj.created_at, base_model.created_at)
             self.assertEqual(obj.updated_at, base_model.updated_at)
+
+        key = "BaseModel.{}".format(base_model.id)
+        self.assertIn(key, reloaded_objects)
         
 
 if __name__ == '__main__':
