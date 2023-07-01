@@ -3,7 +3,7 @@ import unittest
 import os
 from models import storage
 from models.base_model import BaseModel
-
+from models.engine.file_storage import FileStorage
 
 class FileStorageTestCase(unittest.TestCase):
     def setUp(self):
@@ -22,6 +22,16 @@ class FileStorageTestCase(unittest.TestCase):
     def test_obj_list_empty(self):
         """ensures that the __objects is empty at the start"""
         self.assertEqual(len(storage.all()), 0)
+
+    def test_filestorage_instance(self):
+        """checks that storage is correctlly instantiated"""
+        self.assertIsInstance(storage, FileStorage)
+        base_model = BaseModel()
+        base_model.save()
+        all_objects = storage.all()
+        self.assertEqual(len(all_objects), 1)
+        self.assertIn("BaseModel.{}".format(base_model.id), all_objects)
+
 
     def test_new_method(self):
         """checks that the new instance is added to the __objects"""
