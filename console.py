@@ -118,7 +118,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             else:
                 obj = storage.all()[instance_key]
-                setattr(obj, args[2], eval(args[3]))
+                try:
+                    setattr(obj, args[2], eval(args[3]))
+                except NameError:
+                    setattr(obj, args[2], args[3])
                 obj.save()
 
     def default(self, arg):
@@ -140,11 +143,18 @@ class HBNBCommand(cmd.Cmd):
                 uuid = eval(args[1].strip("destroy()"))
                 self.do_destroy(f"{args[0]} {uuid}")
             elif args[1].startswith("update"):
-                entry = args[1].strip("update()").split(", ")
-                uuid = eval(entry[0])
-                name = eval(entry[1])
-                value = entry[2]
-                self.do_update(f"{args[0]} {uuid} {name} {value}")
+                if args[1].endswith("})"):
+                    entry = args[1].strip("update()").strip("}").split(", {")
+                    uuid = eval(entry[0])
+                    dictionary = eval('{' + entry[1] + '}')
+                    for name, value in dictionary.items():
+                        self.do_update(f"{args[0]} {uuid} {name} {value}")
+                else:
+                    entry = args[1].strip("update()").split(", ")
+                    uuid = eval(entry[0])
+                    name = eval(entry[1])
+                    value = entry[2]
+                    self.do_update(f"{args[0]} {uuid} {name} {value}")
 
 
 if __name__ == '__main__':
