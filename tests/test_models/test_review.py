@@ -9,9 +9,9 @@ import os
 class TestBaseModel(unittest.TestCase):
     def test_instance_attributes(self):
         review = Review()
-        self.assertIsInstance(place_id, str)
-        self.assertIsInstance(user_id, str)
-        self.assertIsInstance(text, str)
+        self.assertIsInstance(review.place_id, str)
+        self.assertIsInstance(review.user_id, str)
+        self.assertIsInstance(review.text, str)
 
 
 if __name__ == '__main__':
