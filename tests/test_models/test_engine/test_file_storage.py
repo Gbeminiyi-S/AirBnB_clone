@@ -65,5 +65,6 @@ class FileStorageTestCase(unittest.TestCase):
         """ Nothing happens if file does not exist """
         self.assertEqual(storage.reload(), None)
 
+
 if __name__ == '__main__':
     unittest.main()
